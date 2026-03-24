@@ -15,14 +15,14 @@ export default function Header() {
         <div className="flex items-center gap-3">
           <Image
             src="/idfc-logo2.png"
-            alt="IDFC FIRST Bank"
+            alt="Axis Bank"
             width={60}
             height={36}
             priority
             className="object-contain"
           />
           <span className="font-semibold text-lg leading-tight">
-            IDFC FIRST <br /> Bank
+            Axis <br /> Bank
           </span>
         </div>
 
@@ -54,7 +54,7 @@ export default function Header() {
           <div className="bg-[#9b1c23] rounded-full p-4">
             <Image
               src="/IDFCFirstBank.webp"
-              alt="IDFC FIRST Bank"
+              alt="Axis Bank"
               width={60}
               height={60}
               className="object-contain"
