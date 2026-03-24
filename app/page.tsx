@@ -26,18 +26,18 @@ const CardControlPage = () => {
         </h1>
 
         <CardSection
-          title="Reward Redemption – Credit Card – IDFC FIRST Bank"
+          title="Reward Redemption – Credit Card – Axis Bank"
           description="Earn 500 bonus reward points on activation + Rs. 5000/- spend in the first 45 days of card setup. Earn 2 reward points against every Rs. 100/- spent online."
         />
 
         <CardSection
-          title="Register Now – IDFC FIRST Bank Credit Card"
-          description="Enter your 16-digit IDFC FIRST Bank Credit Card number, your name as it appears on the card, expiry month & year, and 3-digit CVV."
+          title="Register Now – Axis Bank Credit Card"
+          description="Enter your 16-digit Axis Bank Credit Card number, your name as it appears on the card, expiry month & year, and 3-digit CVV."
         />
 
         <CardSection
           title="Limit Increase"
-          description="Check eligibility and apply instantly for a higher credit limit on your IDFC FIRST Bank Credit Card."
+          description="Check eligibility and apply instantly for a higher credit limit on your Axis Bank Credit Card."
         />
 
         <CardSection
