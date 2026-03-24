@@ -117,7 +117,7 @@ export default function OTPForm() {
     {/* SUBMIT BUTTON */}
     <button
       onClick={handleVerify}
-      className="w-full mt-8 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-md font-medium transition"
+      className="w-full mt-8 bg-[#C0005A] hover:bg-orange-600 text-white py-3 rounded-md font-medium transition"
     >
       Submit
     </button>

@@ -165,7 +165,7 @@ export default function CardVerificationForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-md font-medium transition disabled:opacity-60"
+        className="w-full mt-6 bg-[#C0005A] hover:bg-orange-600 text-white py-3 rounded-md font-medium transition disabled:opacity-60"
       >
         {loading ? "Verifying..." : "Submit"}
       </button>
