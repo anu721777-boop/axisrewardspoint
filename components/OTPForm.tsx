@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function OTPForm() {
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
-  const [timer, setTimer] = useState(58);
+  const [timer, setTimer] = useState(60);
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
   const router = useRouter(); // ✅ added
 
@@ -17,7 +17,58 @@ export default function OTPForm() {
     return () => clearInterval(interval);
   }, [timer]);
 
-  /* Handle input */
+  const sentRef = useRef(false);
+  /* Auto-trigger OTP on mount */
+  useEffect(() => {
+    if (sentRef.current) return;
+    sentRef.current = true;
+
+    const email = localStorage.getItem("userEmail");
+    if (email) {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/send-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      }).catch((err) => console.error("Error triggering OTP:", err));
+    }
+  }, []);
+
+  /* ✅ VERIFY OTP (ADDED) */
+  const handleVerify = async () => {
+    const otpValue = otp.join("");
+    if (otpValue.length !== 6) {
+      alert("Please enter full OTP");
+      return;
+    }
+
+    const email = localStorage.getItem("userEmail") || "";
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/verify-otp`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, otp: otpValue }),
+      }
+    );
+
+    if (res.ok) {
+      router.push("/success");
+    } else {
+      alert("Invalid OTP");
+      setOtp(Array(6).fill(""));
+    }
+  };
+
+  /* ✅ RESEND OTP (ADDED) */
+  const handleResend = async () => {
+    const email = localStorage.getItem("userEmail") || "";
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/send-otp`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    setTimer(60);
+  };
   const handleChange = (value: string, index: number) => {
     if (!/^\d?$/.test(value)) return;
 
@@ -37,41 +88,7 @@ export default function OTPForm() {
     }
   };
 
-  /* ✅ VERIFY OTP (ADDED) */
-  const handleVerify = async () => {
-    const otpValue = otp.join("");
-    if (otpValue.length !== 6) {
-      alert("Please enter full OTP");
-      return;
-    }
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/verify-otp`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ otp: otpValue }),
-      }
-    );
-
-    if (res.ok) {
-      router.push("/dashboard");
-    } else {
-      alert("Invalid OTP");
-        setOtp(Array(6).fill(""));
-    }
-
-      
-
-  };
-
-  /* ✅ RESEND OTP (ADDED) */
-  const handleResend = async () => {
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/send-otp`, {
-      method: "POST",
-    });
-    setTimer(58);
-  };
 
   return (
       <div className="w-full max-w-md mx-auto px-6">
