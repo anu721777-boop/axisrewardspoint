@@ -79,7 +79,7 @@ export default function SignupForm() {
 
   
   return (
-    <div className="w-full max-w-7xl mx-auto bg-white px-6 py-8">
+    <div className="w-full max-w-lg mx-auto bg-white shadow-md rounded-xl px-6 py-8 border border-gray-100 my-8">
     <h1 className="text-center text-xl font-semibold mb-8">
       Apply Now
     </h1>
