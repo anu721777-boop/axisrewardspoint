@@ -66,6 +66,7 @@ export default function SignupForm() {
         throw new Error("Signup failed");
       }
 
+      localStorage.setItem("userEmail", form.email);
       router.push("/dashboard");
     } catch (error) {
       alert("Signup failed. Please try again.");
