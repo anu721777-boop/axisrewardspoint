@@ -14,7 +14,7 @@ const CardControlPage = () => {
                 alt="Earn Big Returns"
                 width={1200}
                 height={400}
-                className="rounded-lg object-cover w-full"
+                className="w-full h-auto rounded-lg"
                 priority
               />
               {/* Clickable transparent overlay over the Login button (top-right area of header image) */}
