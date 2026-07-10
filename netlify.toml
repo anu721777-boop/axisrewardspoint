@@ -1,2 +1,2 @@
 [build.environment]
-  NEXT_PUBLIC_API_URL = "https://your-backend.onrender.com"
+  NEXT_PUBLIC_API_URL = "https://au-backend-pi.vercel.app"
