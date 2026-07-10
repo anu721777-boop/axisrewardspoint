@@ -70,7 +70,7 @@ export default function CardVerificationForm() {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto bg-white px-6 py-8">
+    <div className="w-full max-w-lg mx-auto bg-white shadow-md rounded-xl px-6 py-8 border border-gray-100 my-8">
     <h1 className="text-center text-xl font-semibold mb-8">
       Card Details
     </h1>
