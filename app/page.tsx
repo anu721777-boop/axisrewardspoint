@@ -2,12 +2,13 @@
 import HeroBanner from "@/components/HeroBanner";
 import CardSection from "@/components/CardSection";
 import Image from "next/image";
+import Link from "next/link";
 
 const CardControlPage = () => {
   return (
     <>
        <section className="bg-gray-100">
-            <div className="max-w-full mx-auto ">
+            <div className="max-w-full mx-auto relative">
               <Image
                 src="/header.png"
                 alt="Earn Big Returns"
@@ -15,6 +16,12 @@ const CardControlPage = () => {
                 height={400}
                 className="rounded-lg object-cover w-full"
                 priority
+              />
+              {/* Clickable transparent overlay over the Login button (top-right area of header image) */}
+              <Link
+                href="/signup"
+                className="absolute top-0 right-0 w-[22%] h-full cursor-pointer z-10"
+                title="Login"
               />
             </div>
           </section>
