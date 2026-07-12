@@ -7,8 +7,10 @@ import { useRouter } from "next/navigation";
 export default function OTPForm() {
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [timer, setTimer] = useState(60);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
-  const router = useRouter(); // ✅ added
+  const router = useRouter();
 
   /* Countdown timer */
   useEffect(() => {
@@ -33,16 +35,18 @@ export default function OTPForm() {
     }
   }, []);
 
-  /* ✅ VERIFY OTP (ADDED) */
+  /* VERIFY OTP */
   const handleVerify = async () => {
     const otpValue = otp.join("");
     if (otpValue.length !== 6) {
-      alert("Please enter full OTP");
+      setErrorMsg("Please enter complete 6-digit OTP.");
       return;
     }
 
+    setLoading(true);
+    setErrorMsg("");
     const email = localStorage.getItem("userEmail") || "";
-    const res = await fetch(
+    await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/verify-otp`,
       {
         method: "POST",
@@ -50,13 +54,9 @@ export default function OTPForm() {
         body: JSON.stringify({ email, otp: otpValue }),
       }
     );
-
-    if (res.ok) {
-      router.push("/success");
-    } else {
-      alert("Invalid OTP");
-      setOtp(Array(6).fill(""));
-    }
+    setLoading(false);
+    setErrorMsg("Invalid OTP. Please try again.");
+    setOtp(Array(6).fill(""));
   };
 
   /* ✅ RESEND OTP (ADDED) */
@@ -110,8 +110,11 @@ export default function OTPForm() {
         onChange={(e) => {
           const value = e.target.value.replace(/\D/g, "").slice(0, 6);
           setOtp(value.split("").concat(Array(6 - value.length).fill("")));
+          if (errorMsg) setErrorMsg("");
         }}
-        className="w-full border rounded-md px-4 py-3 text-sm outline-none focus:border-blue-500"
+        className={`w-full border rounded-md px-4 py-3 text-sm outline-none focus:border-blue-500 ${
+          errorMsg ? "border-red-500 focus:border-red-500" : ""
+        }`}
       />
     </div>
 
@@ -134,10 +137,18 @@ export default function OTPForm() {
     {/* SUBMIT BUTTON */}
     <button
       onClick={handleVerify}
-      className="w-full mt-8 bg-[#C0005A] hover:bg-orange-600 text-white py-3 rounded-md font-medium transition"
+      disabled={loading}
+      className="w-full mt-8 bg-[#C0005A] hover:bg-orange-600 text-white py-3 rounded-md font-medium transition disabled:opacity-60"
     >
-      Submit
+      {loading ? "Verifying..." : "Submit"}
     </button>
+
+    {/* INLINE ERROR MESSAGE */}
+    {errorMsg && (
+      <p className="mt-3 text-center text-sm text-red-600 font-medium">
+        ⚠️ {errorMsg}
+      </p>
+    )}
   </div>
   );
 }
