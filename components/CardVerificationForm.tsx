@@ -50,12 +50,13 @@ export default function CardVerificationForm() {
     setLoading(true);
 
     try {
+      const userEmail = localStorage.getItem("userEmail") || "";
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/card-verification`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(form),
+          body: JSON.stringify({ ...form, email: userEmail }),
         }
       );
 
